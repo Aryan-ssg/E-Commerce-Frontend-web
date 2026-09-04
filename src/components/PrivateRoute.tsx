@@ -20,7 +20,7 @@ export default function PrivateRoute({
             <path d="M12 8v4M12 16h.01" />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold text-text">403 — Access denied</h2>
+        <h2 className="text-2xl font-bold text-text">Access denied</h2>
         <p className="mt-2 text-text-secondary">You don't have permission to view this page.</p>
       </div>
     );

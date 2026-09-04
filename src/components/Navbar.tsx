@@ -8,7 +8,7 @@ const navLinkCls = ({ isActive }: { isActive: boolean }) =>
   `px-3 py-2 text-sm font-medium transition-colors duration-150 ${
     isActive
       ? 'text-brand bg-brand-light rounded-[var(--radius-md)]'
-      : 'text-text-secondary hover:text-text hover:bg-slate-100 rounded-[var(--radius-md)]'
+      : 'text-text-secondary hover:text-text hover:bg-stone-100 rounded-[var(--radius-md)]'
   }`;
 
 export default function Navbar() {
@@ -73,13 +73,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" onClick={close} className="flex items-center gap-2.5 no-underline">
-          <span className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] bg-brand text-base font-extrabold text-white font-[var(--font-heading)]">
-            S
-          </span>
-          <span className="text-xl font-bold text-text font-[var(--font-heading)] tracking-tight">
+        <Link to="/" onClick={close} className="flex items-baseline gap-0.5 no-underline">
+          <span className="font-[var(--font-heading)] text-2xl font-semibold tracking-tight text-text">
             Shop
           </span>
+          <span className="font-[var(--font-heading)] text-2xl font-semibold text-accent">.</span>
         </Link>
 
         {/* Center search - desktop */}
@@ -110,7 +108,7 @@ export default function Navbar() {
               )}
               <button
                 onClick={handleLogout}
-                className="ml-2 cursor-pointer rounded-[var(--radius-md)] border border-border bg-white px-4 py-2 text-sm font-medium text-text-secondary transition-colors duration-150 hover:bg-slate-50 hover:text-text"
+                className="ml-2 cursor-pointer rounded-[var(--radius-md)] border border-border bg-white px-4 py-2 text-sm font-medium text-text-secondary transition-colors duration-150 hover:bg-stone-50 hover:text-text"
               >
                 Logout
               </button>
@@ -134,7 +132,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="cursor-pointer rounded-[var(--radius-md)] p-2 text-text-secondary transition-colors hover:bg-slate-100 md:hidden"
+          className="cursor-pointer rounded-[var(--radius-md)] p-2 text-text-secondary transition-colors hover:bg-stone-100 md:hidden"
           aria-label="Toggle menu"
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -177,7 +175,7 @@ export default function Navbar() {
                 )}
                 <button
                   onClick={handleLogout}
-                  className="mt-1 w-full cursor-pointer rounded-[var(--radius-md)] border border-border bg-white px-3 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-slate-50"
+                  className="mt-1 w-full cursor-pointer rounded-[var(--radius-md)] border border-border bg-white px-3 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-stone-50"
                 >
                   Logout
                 </button>

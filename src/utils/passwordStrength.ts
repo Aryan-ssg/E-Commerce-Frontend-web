@@ -75,7 +75,7 @@ export function getPasswordStrength(password: string): PasswordStrength {
         : score === 2
           ? 'var(--color-warning)'      // amber
           : score === 3
-            ? '#3b82f6'                 // blue — Good
+            ? 'var(--color-brand)'       // teal — Good
             : 'var(--color-success)';   // green — Strong
 
   return { score, label, percent, checks, color };

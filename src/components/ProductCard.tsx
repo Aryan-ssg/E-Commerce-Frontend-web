@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ProductResponse } from '../types';
 import { addToCart } from '../api/cart';
 import { useAuth } from '../auth/AuthContext';
@@ -10,9 +10,14 @@ export default function ProductCard({ product }: { product: ProductResponse }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [imgFailed, setImgFailed] = useState(false);
+  // Reset when imageUrl changes
+  useEffect(() => { setImgFailed(false); }, [product.imageUrl]);
   const stock = product.stock ?? 0;
   const isOutOfStock = stock === 0;
   const isLowStock = stock > 0 && stock <= 5;
+
+
+
 
   const placeholderSrc = `/products/ph${(product.productId % 12) + 1}.svg`;
 
@@ -39,24 +44,23 @@ export default function ProductCard({ product }: { product: ProductResponse }) {
   };
 
   return (
-    <div className="group flex flex-col rounded-lg] border border-border bg-surface shadow-(--shadow-card) transition-all duration-200 hover:-translate-y-0.5 hover:shadow-(--shadow-dropdown)">
-      <div className="relative aspect-square overflow-hidden rounded-t-lg] bg-slate-100">
+    <div className="group flex flex-col rounded-[var(--radius-lg)] border border-border bg-surface transition-colors duration-150 hover:border-brand/40">
+      <div className="relative aspect-square overflow-hidden rounded-t-[var(--radius-lg)] border-b border-border bg-stone-100">
         <img
           src={product.imageUrl && !imgFailed ? product.imageUrl : placeholderSrc}
           alt={product.productName}
           onError={() => setImgFailed(true)}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-4">
-        <p className="text-xs font-medium text-text-secondary uppercase tracking-wide">
+        <span className="absolute left-0 top-3 border border-l-0 border-border bg-surface/95 py-0.5 pl-2 pr-2.5 text-[11px] font-medium text-text-secondary">
           {product.categoryName}
-        </p>
-
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col gap-1.5 p-4">
         <h3 className="m-0 text-base font-semibold leading-snug text-text">
           {product.productName}
         </h3>
-        <p className="m-0 mt-auto text-lg font-bold text-accent">
+        <p className="m-0 mt-auto font-[var(--font-heading)] text-lg font-semibold text-accent">
           ₹{product.productPrice}
         </p>
         <p className={`m-0 text-xs font-medium ${isOutOfStock ? 'text-error' : isLowStock ? 'text-warning' : 'text-success'
@@ -67,7 +71,7 @@ export default function ProductCard({ product }: { product: ProductResponse }) {
         <button
           onClick={handleAdd}
           disabled={busy || isOutOfStock}
-          className="mt-1 w-full cursor-pointer rounded-md] bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-1 w-full cursor-pointer rounded-[var(--radius-sm)] bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
         >
           {busy ? 'Adding…' : 'Add to cart'}
         </button>

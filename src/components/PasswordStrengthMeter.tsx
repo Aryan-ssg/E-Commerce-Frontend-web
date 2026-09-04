@@ -11,13 +11,13 @@ export default function PasswordStrengthMeter({ password }: { password: string }
     score === 0 ? 'text-text-muted' :
     score === 1 ? 'text-error' :
     score === 2 ? 'text-warning' :
-    score === 3 ? 'text-[#2563eb]' :
+    score === 3 ? 'text-brand' :
     'text-success';
 
   const barColor =
     score === 1 ? 'bg-error' :
     score === 2 ? 'bg-warning' :
-    score === 3 ? 'bg-[#3b82f6]' :
+    score === 3 ? 'bg-brand' :
     score === 4 ? 'bg-success' : 'bg-border';
 
   return (
@@ -27,7 +27,7 @@ export default function PasswordStrengthMeter({ password }: { password: string }
         {Array.from({ length: SEGMENTS }).map((_, i) => (
           <div
             key={i}
-            className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${i < score ? barColor : 'bg-slate-200'}`}
+            className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${i < score ? barColor : 'bg-stone-200'}`}
           />
         ))}
       </div>

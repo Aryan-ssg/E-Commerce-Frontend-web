@@ -9,12 +9,12 @@ const PAGE_SIZE = 12;
 function SkeletonCard() {
   return (
     <div className="animate-pulse rounded-[var(--radius-lg)] border border-border bg-surface shadow-[var(--shadow-card)]">
-      <div className="aspect-square rounded-t-[var(--radius-lg)] bg-slate-200" />
+      <div className="aspect-square rounded-t-[var(--radius-lg)] bg-stone-200" />
       <div className="flex flex-col gap-2.5 p-4">
-        <div className="h-3 w-16 rounded bg-slate-200" />
-        <div className="h-4 w-3/4 rounded bg-slate-200" />
-        <div className="h-5 w-20 rounded bg-slate-200" />
-        <div className="h-10 w-full rounded-[var(--radius-md)] bg-slate-200" />
+        <div className="h-3 w-16 rounded bg-stone-200" />
+        <div className="h-4 w-3/4 rounded bg-stone-200" />
+        <div className="h-5 w-20 rounded bg-stone-200" />
+        <div className="h-10 w-full rounded-[var(--radius-md)] bg-stone-200" />
       </div>
     </div>
   );
@@ -114,33 +114,35 @@ export default function Catalog() {
       )}
 
       {/* Category filters */}
-      <div className="mb-6 flex flex-wrap items-center gap-2">
-        <button
-          onClick={() => handleSelectCategory(null)}
-          className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-150 ${
-            selectedCategory === null
-              ? 'border-brand bg-brand text-white'
-              : 'border-border bg-surface text-text-secondary hover:border-slate-300 hover:text-text'
-          }`}
-        >
-          All
-        </button>
-        {categories.map((c) => (
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-border">
+        <div className="flex flex-wrap items-end gap-x-5">
           <button
-            key={c.categoryId}
-            onClick={() => handleSelectCategory(c.categoryId)}
-            className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-150 ${
-              selectedCategory === c.categoryId
-                ? 'border-brand bg-brand text-white'
-                : 'border-border bg-surface text-text-secondary hover:border-slate-300 hover:text-text'
+            onClick={() => handleSelectCategory(null)}
+            className={`cursor-pointer border-b-2 pb-2.5 text-sm font-medium transition-colors duration-150 ${
+              selectedCategory === null
+                ? 'border-brand text-text'
+                : 'border-transparent text-text-secondary hover:text-text'
             }`}
           >
-            {c.categoryName}
+            All
           </button>
-        ))}
+          {categories.map((c) => (
+            <button
+              key={c.categoryId}
+              onClick={() => handleSelectCategory(c.categoryId)}
+              className={`cursor-pointer border-b-2 pb-2.5 text-sm font-medium transition-colors duration-150 ${
+                selectedCategory === c.categoryId
+                  ? 'border-brand text-text'
+                  : 'border-transparent text-text-secondary hover:text-text'
+              }`}
+            >
+              {c.categoryName}
+            </button>
+          ))}
+        </div>
         <Link
           to="/categories"
-          className="ml-auto inline-flex cursor-pointer items-center gap-1 rounded-full border border-dashed border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:border-brand hover:text-brand"
+          className="mb-2.5 inline-flex cursor-pointer items-center gap-1 text-sm font-medium text-text-secondary transition-colors hover:text-brand"
         >
           Browse categories
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -168,7 +170,7 @@ export default function Catalog() {
       {/* Empty state */}
       {!loading && products.length === 0 && !error && (
         <div className="py-20 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-muted">
               <path d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
             </svg>
@@ -192,7 +194,7 @@ export default function Catalog() {
           {isSearching && (
             <button
               onClick={clearSearch}
-              className="mt-4 cursor-pointer rounded-[var(--radius-md)] border border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary hover:bg-slate-50"
+              className="mt-4 cursor-pointer rounded-[var(--radius-md)] border border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary hover:bg-stone-50"
             >
               Clear search and show all
             </button>
@@ -215,7 +217,7 @@ export default function Catalog() {
           <button
             disabled={page === 0}
             onClick={() => setPage((p) => p - 1)}
-            className="cursor-pointer rounded-[var(--radius-md)] border border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="cursor-pointer rounded-[var(--radius-md)] border border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Previous
           </button>
@@ -225,7 +227,7 @@ export default function Catalog() {
           <button
             disabled={page + 1 >= totalPages}
             onClick={() => setPage((p) => p + 1)}
-            className="cursor-pointer rounded-[var(--radius-md)] border border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="cursor-pointer rounded-[var(--radius-md)] border border-border bg-surface px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Next
           </button>

@@ -44,7 +44,7 @@ export default function AdminLayout() {
   return (
     <div className="flex flex-col gap-6 md:flex-row md:items-start">
       <aside className="w-full shrink-0 md:w-56">
-        <div className="mb-3 px-1 text-xs font-semibold uppercase tracking-wider text-text-muted">
+        <div className="mb-3 px-1 font-[var(--font-heading)] text-base font-semibold text-text">
           Dashboard
         </div>
         <nav className="flex flex-row gap-1 overflow-x-auto md:flex-col">
@@ -56,7 +56,7 @@ export default function AdminLayout() {
                 `flex items-center gap-2.5 rounded-[var(--radius-md)] px-3 py-2.5 text-sm font-medium no-underline transition-colors duration-150 ${
                   isActive
                     ? 'bg-brand-light text-brand'
-                    : 'text-text-secondary hover:bg-slate-100 hover:text-text'
+                    : 'text-text-secondary hover:bg-stone-100 hover:text-text'
                 }`
               }
             >

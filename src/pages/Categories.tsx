@@ -6,24 +6,25 @@ import type { Category } from '../types';
 function SkeletonCategory() {
   return (
     <div className="animate-pulse rounded-[var(--radius-lg)] border border-border bg-surface shadow-[var(--shadow-card)]">
-      <div className="h-28 rounded-t-[var(--radius-lg)] bg-slate-200" />
+      <div className="h-28 rounded-t-[var(--radius-lg)] bg-stone-200" />
       <div className="p-4">
-        <div className="h-5 w-2/3 rounded bg-slate-200" />
-        <div className="mt-2 h-4 w-1/2 rounded bg-slate-100" />
+        <div className="h-5 w-2/3 rounded bg-stone-200" />
+        <div className="mt-2 h-4 w-1/2 rounded bg-stone-100" />
       </div>
     </div>
   );
 }
 
-// deterministic pastel for initial letter background
+// deterministic, muted background for each category's initial letter —
+// coordinated with the shop's palette rather than a stock rainbow of tints
 function bgForId(id: number) {
   const palettes = [
-    'bg-[#eef2ff] text-[#4338ca]', // brand-light
-    'bg-[#fef3c7] text-[#d97706]', // warning-light
-    'bg-[#ecfdf5] text-[#059669]', // success-light
-    'bg-[#fff1f2] text-[#e11d48]', // error-light
-    'bg-[#f0f9ff] text-[#0284c7]',
-    'bg-[#fdf4ff] text-[#a21caf]',
+    'bg-brand-light text-brand',
+    'bg-warning-light text-warning',
+    'bg-[#e6ece3] text-[#4c6b3f]',   // sage
+    'bg-[#f1e6df] text-[#8a4a2c]',   // clay
+    'bg-[#e6ecef] text-[#3f6b73]',   // dusty teal-blue
+    'bg-[#efe6ec] text-[#7c4a63]',   // muted plum
   ];
   return palettes[id % palettes.length];
 }
@@ -86,7 +87,7 @@ export default function Categories() {
 
       {!loading && !error && categories.length === 0 && (
         <div className="py-20 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-stone-100">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-text-muted">
               <path d="M3 7h18M3 12h18M3 17h18" />
             </svg>
@@ -105,7 +106,7 @@ export default function Categories() {
               <button
                 key={c.categoryId}
                 onClick={() => handleBrowse(c)}
-                className="group flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface text-left shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-dropdown)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 cursor-pointer"
+                className="group flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface text-left transition-colors duration-150 hover:border-brand/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 cursor-pointer"
               >
                 <div className={`relative flex h-28 items-center justify-center ${bg} transition-colors`}>
                   <span className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] bg-white/90 text-xl font-extrabold shadow-sm ring-1 ring-black/5">

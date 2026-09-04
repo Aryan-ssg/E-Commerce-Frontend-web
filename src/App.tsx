@@ -73,11 +73,9 @@ export default function App() {
           <footer className="border-t border-border bg-surface">
             <div className="mx-auto max-w-7xl px-4 sm:px-6">
               <div className="flex flex-col items-center justify-between gap-4 py-8 md:flex-row">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-brand text-xs font-bold text-white">
-                    S
-                  </span>
-                  <span className="text-sm font-semibold text-text">Shop</span>
+                <div className="flex items-baseline gap-0.5">
+                  <span className="font-[var(--font-heading)] text-lg font-semibold text-text">Shop</span>
+                  <span className="font-[var(--font-heading)] text-lg font-semibold text-accent">.</span>
                 </div>
                 <nav className="flex flex-wrap items-center justify-center gap-4 text-sm text-text-secondary">
                   <a href="/" className="transition-colors hover:text-text">Products</a>
