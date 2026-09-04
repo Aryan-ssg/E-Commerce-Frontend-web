@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-ssr
+*.local
+.vite
+# Vite temp file generated during dev
+vite.config.ts.timestamp-*.mjs
