@@ -9,9 +9,11 @@ import type { CartResponse } from '../types';
 interface FieldErrors {
   addressLine?: string;
   pinCode?: string;
+  contactNumber?: string;
 }
 
 const PIN_RE = /^[1-9][0-9]{5}$/;
+const PHONE_RE = /^\d{10}$/;
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ export default function Checkout() {
   const [addressLine, setAddressLine] = useState('');
   const [pinCode, setPinCode] = useState('');
   const [landmark, setLandmark] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -36,6 +39,8 @@ export default function Checkout() {
     if (!addressLine.trim()) e.addressLine = 'Address is required';
     if (!pinCode.trim()) e.pinCode = 'PIN code is required';
     else if (!PIN_RE.test(pinCode.trim())) e.pinCode = 'Enter a valid 6-digit PIN code';
+    if (!contactNumber.trim()) e.contactNumber = 'Contact number is required';
+    else if (!PHONE_RE.test(contactNumber.trim())) e.contactNumber = 'Enter a valid 10-digit phone number';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -55,6 +60,7 @@ export default function Checkout() {
         addressLine: addressLine.trim(),
         pinCode: pinCode.trim(),
         landmark: landmark.trim() || undefined,
+        contactNumber: contactNumber.trim(),
       });
 
       const payment = await createPaymentOrder(order.orderId);
@@ -66,7 +72,7 @@ export default function Checkout() {
         currency: payment.currency,
         order_id: payment.razorpayOrderId,
         name: 'Shop',
-        theme: { color: '#4338ca' },
+        theme: { color: '#0f5c52' },
       });
 
       await verifyPayment(order.orderId, {
@@ -133,7 +139,7 @@ export default function Checkout() {
 
       {/* Order summary card */}
       <div className="mb-5 rounded-lg border border-border bg-surface p-5 shadow-(--shadow-card)">
-        <h3 className="m-0 mb-3 text-sm font-semibold uppercase tracking-wide text-text-secondary">Your order</h3>
+        <h3 className="m-0 mb-3 font-[var(--font-heading)] text-lg font-semibold text-text">Your order</h3>
         <div className="flex flex-col gap-2">
           {cart.items.map((i) => (
             <div key={i.cartItemId} className="flex items-center justify-between text-sm">
@@ -152,7 +158,7 @@ export default function Checkout() {
 
       {/* Address form */}
       <div className="rounded-lg border border-border bg-surface p-5 shadow-(--shadow-card)">
-        <h3 className="m-0 mb-4 text-sm font-semibold uppercase tracking-wide text-text-secondary">Delivery address</h3>
+        <h3 className="m-0 mb-4 font-[var(--font-heading)] text-lg font-semibold text-text">Delivery address</h3>
 
         <div className="flex flex-col gap-4">
           <div>
@@ -199,6 +205,23 @@ export default function Checkout() {
                 className={inputCls}
               />
             </div>
+          </div>
+
+          <div>
+            <label htmlFor="checkout-phone" className="mb-1.5 block text-sm font-medium text-text">Contact number</label>
+            <input
+              id="checkout-phone"
+              value={contactNumber}
+              inputMode="numeric"
+              maxLength={10}
+              onChange={(e) => {
+                setContactNumber(e.target.value);
+                if (errors.contactNumber) setErrors({ ...errors, contactNumber: undefined });
+              }}
+              placeholder="10-digit phone number"
+              className={inputCls}
+            />
+            {errors.contactNumber && <p className="mt-1 text-xs text-error">{errors.contactNumber}</p>}
           </div>
         </div>
       </div>

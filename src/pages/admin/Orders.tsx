@@ -131,6 +131,9 @@ export default function AdminOrders() {
               <p className="m-0 mt-1 text-sm text-text-secondary">
                 {[order.addressLine, order.landmark, `PIN ${order.pinCode}`].filter(Boolean).join(', ')}
               </p>
+              <p className="m-0 mt-1 text-sm text-text-secondary">
+                {order.contactNumber}
+              </p>
             </div>
           </div>
 

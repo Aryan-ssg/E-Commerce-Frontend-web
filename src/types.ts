@@ -62,6 +62,7 @@ export interface GetOrderByIdResponse {
   addressLine: string;
   pinCode: string;
   landmark?: string;
+  contactNumber: string;
   orderDateTime: string;
   orderStatus: OrderStatus;
   orderItems: OrderItemsResponse[];
@@ -73,6 +74,7 @@ export interface PlaceOrderResponse {
   addressLine: string;
   pinCode: string;
   landmark?: string;
+  contactNumber: string;
   orderDateTime: string;
   orderStatus: OrderStatus;
   orderItems: OrderItemsResponse[];

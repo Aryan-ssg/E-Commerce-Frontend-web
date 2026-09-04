@@ -11,6 +11,7 @@ export interface PlaceOrderBody {
   addressLine: string;
   pinCode: string;
   landmark?: string;
+  contactNumber: string;
 }
 
 export async function placeOrder(body: PlaceOrderBody): Promise<PlaceOrderResponse> {
