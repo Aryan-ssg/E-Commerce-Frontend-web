@@ -118,7 +118,11 @@ npm run preview
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://YOUR-BACKEND-NAME.onrender.com/api/:path*"
+      "destination": "https://e-commerce-backend-api-6sge.onrender.com/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
