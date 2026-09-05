@@ -43,6 +43,7 @@ export default function AdminProducts() {
   const [editPrice, setEditPrice] = useState('');
   const [editFile, setEditFile] = useState<File | null>(null);
   const [editBusy, setEditBusy] = useState(false);
+  const [createBusy, setCreateBusy] = useState(false);
 
   async function load() {
     setError('');
@@ -63,11 +64,13 @@ export default function AdminProducts() {
   }, [page]);
 
   async function handleCreate() {
+    if (createBusy) return;
     setError('');
     if (categoryId === '' || !name.trim() || !price || !stock) {
       setError('Name, price, stock and category are required');
       return;
     }
+    setCreateBusy(true);
     try {
       const created = await adminApi.createProduct(Number(categoryId), {
         productName: name.trim(),
@@ -93,6 +96,8 @@ export default function AdminProducts() {
       await load();
     } catch (e: any) {
       setError(e?.response?.data?.message ?? 'Failed to create product');
+    } finally {
+      setCreateBusy(false);
     }
   }
 
@@ -176,8 +181,8 @@ export default function AdminProducts() {
               onChange={(e) => setCreateFile(e.target.files?.[0] ?? null)}
             />
           </label>
-          <button onClick={handleCreate} className="cursor-pointer rounded-[var(--radius-md)] bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-dark">
-            Create
+          <button onClick={handleCreate} disabled={createBusy} className="cursor-pointer rounded-[var(--radius-md)] bg-brand px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50">
+            {createBusy ? 'Creating…' : 'Create'}
           </button>
         </div>
       </div>
