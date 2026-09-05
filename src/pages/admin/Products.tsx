@@ -42,6 +42,7 @@ export default function AdminProducts() {
   const [editName, setEditName] = useState('');
   const [editPrice, setEditPrice] = useState('');
   const [editFile, setEditFile] = useState<File | null>(null);
+  const [editBusy, setEditBusy] = useState(false);
 
   async function load() {
     setError('');
@@ -78,8 +79,9 @@ export default function AdminProducts() {
         try {
           const updated = await adminApi.uploadProductImage(created.productId, createFile);
           setImageUrl(updated.imageUrl ?? '');
-        } catch {
-          // product created but image upload failed — non-fatal
+        } catch (e: any) {
+          console.error('Image upload failed:', e?.response?.data ?? e?.message ?? e);
+          setError('Product created but image upload failed: ' + (e?.response?.data?.message ?? e?.message ?? 'Unknown error'));
         }
       }
       setName('');
@@ -95,7 +97,8 @@ export default function AdminProducts() {
   }
 
   async function handleUpdate() {
-    if (!editing) return;
+    if (!editing || editBusy) return;
+    setEditBusy(true);
     setError('');
     try {
       await adminApi.updateProduct(editing.productId, {
@@ -105,8 +108,9 @@ export default function AdminProducts() {
       if (editFile) {
         try {
           await adminApi.uploadProductImage(editing.productId, editFile);
-        } catch {
-          // product updated but image upload failed — non-fatal
+        } catch (e: any) {
+          console.error('Image upload failed:', e?.response?.data ?? e?.message ?? e);
+          setError('Product updated but image upload failed: ' + (e?.response?.data?.message ?? e?.message ?? 'Unknown error'));
         }
       }
       setEditing(null);
@@ -114,6 +118,8 @@ export default function AdminProducts() {
       await load();
     } catch (e: any) {
       setError(e?.response?.data?.message ?? 'Failed to update product');
+    } finally {
+      setEditBusy(false);
     }
   }
 
@@ -232,8 +238,8 @@ export default function AdminProducts() {
                 <td className="px-4 py-3 text-right">
                   {editing?.productId === p.productId ? (
                     <div className="flex justify-end gap-2">
-                      <button onClick={handleUpdate} className="cursor-pointer rounded-[var(--radius-md)] bg-brand px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-brand-dark">
-                        Save
+                      <button onClick={handleUpdate} disabled={editBusy} className="cursor-pointer rounded-[var(--radius-md)] bg-brand px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50">
+                        {editBusy ? 'Saving…' : 'Save'}
                       </button>
                       <button onClick={() => { setEditing(null); setEditFile(null); }} className={btnCls}>
                         Cancel

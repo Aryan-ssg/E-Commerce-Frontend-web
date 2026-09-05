@@ -124,3 +124,11 @@ export interface CreatePaymentOrderResponse {
   currency: string;
   keyId: string;
 }
+
+export interface AdminOrder {
+  orderId: number;
+  totalPrice: number;
+  username: string;
+  orderStatus: OrderStatus;
+  orderDateTime: string;
+}

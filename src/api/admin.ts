@@ -2,6 +2,7 @@ import api from './client';
 import type {
   PagedResponse,
   AdminUser,
+  AdminOrder,
   CategoryRequest,
   CategoryResponse,
   ProductAdminResponse,
@@ -71,6 +72,14 @@ export async function uploadProductImage(
     formData,
     { headers: { 'Content-Type': 'multipart/form-data' } },
   );
+  return data;
+}
+
+export async function getAllOrders(params: {
+  page?: number;
+  size?: number;
+}): Promise<PagedResponse<AdminOrder>> {
+  const { data } = await api.get<PagedResponse<AdminOrder>>('/admin/orders', { params });
   return data;
 }
 
